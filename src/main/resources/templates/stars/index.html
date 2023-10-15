@@ -14,7 +14,7 @@
 
 <nav>
   <div class="nav-wrapper">
-    <a href="#" class="brand-logo">EpicTask</a>
+    <a href="#" class="brand-logo">Stars</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li class="active"><a href="/stars">pendentes</a></li>
       <li><a href="#">concluídas</a></li>
@@ -39,7 +39,7 @@
 
   <div class="row">
 
-    <div th:each="task : ${tasks}" class="col s12 m6 l4">
+    <div th:each="stars : ${stars}" class="col s12 m6 l4">
       <div class="card">
         <div class="card-content">
           <div class="progress">
@@ -50,7 +50,7 @@
           <span th:text="${stars.score}" data-badge-caption="points" class="badge blue white-text"></span>
         </div>
         <div class="card-action">
-          <a th:href="${'/stars/delete/' + task.id}" class="waves-effect waves-light btn blue">
+          <a th:href="${'/stars/delete/' + stars.id}" class="waves-effect waves-light btn blue">
             <i class="material-icons">delete</i>
           </a>
 
