@@ -1,22 +1,31 @@
 package br.com.fiap.demo.stars;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class StarsService {
 
     @Autowired
-    StarsRepository repository;
-    public List<Stars> findAll(){
-        return repository.findAll();
-    }
-    public boolean delete(Long id) {
-        var stars = repository.findById(id);
-        if(stars.isEmpty()) return false;
+    private StarsRepository starsRepository;
 
-        repository.deleteById(id);
-        return true;
+    public List<Stars> findAllStars() {
+        return starsRepository.findAll();
     }
 
+
+    public boolean deleteStars(Long id) {
+        Optional<Stars> stars = starsRepository.findById(id);
+        if (stars.isPresent()) {
+            starsRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+    public void save(Stars stars) {
+        starsRepository.save(stars);
+    }
 }

@@ -1,6 +1,5 @@
 package br.com.fiap.demo.stars;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,10 +24,10 @@ public class Stars {
     @Size(min = 10)
     private String description;
 
-    @Min(1) @Max(100)
+    @Min(1) @Max(5)  // Assuming scores range from 1 to 5
     private Integer score;
 
     @Min(0) @Max(100)
     private Integer status;
-    
+
 }
