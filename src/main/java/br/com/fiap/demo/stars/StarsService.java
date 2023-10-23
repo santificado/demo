@@ -10,22 +10,22 @@ import java.util.Optional;
 public class StarsService {
 
     @Autowired
-    private StarsRepository starsRepository;
+    StarsRepository repository;
 
-    public List<Stars> findAllStars() {
-        return starsRepository.findAll();
+    public List<Stars> findAll(){
+        return repository.findAll();
     }
 
+    public boolean delete(Long id) {
+        var stars = repository.findById(id);
+        if(stars.isEmpty()) return false;
 
-    public boolean deleteStars(Long id) {
-        Optional<Stars> stars = starsRepository.findById(id);
-        if (stars.isPresent()) {
-            starsRepository.deleteById(id);
-            return true;
-        }
-        return false;
+        repository.deleteById(id);
+        return true;
     }
+
     public void save(Stars stars) {
-        starsRepository.save(stars);
+        repository.save(stars);
     }
+
 }

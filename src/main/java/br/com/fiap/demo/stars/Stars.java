@@ -18,10 +18,10 @@ public class Stars {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank()
     private String title;
 
-    @Size(min = 10)
+    @Size(min = 10, message = "{stars.description.size.error}")
     private String description;
 
     @Min(1) @Max(5)  // Assuming scores range from 1 to 5

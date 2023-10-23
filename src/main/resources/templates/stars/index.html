@@ -16,15 +16,26 @@
   <div class="nav-wrapper">
     <a href="#" class="brand-logo">Stars</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li class="active"><a href="/stars">pendentes</a></li>
-      <li><a href="#">concluídas</a></li>
-      <li><a href="#">usuários</a></li>
+      <li class="active"><a href="/task" th:text="#{stars.pending}"></a></li>
+      <li><a href="/stars/done" th:text="#{task.done}">concluídas</a></li> <!-- Link para tarefas concluídas -->
+      <li><a href="/users" th:text="#{users}">usuários</a></li> <!-- Link para usuários -->
       <li>
-        <span th:text="${username}"></span>
-        <img th:src="${avatar_url}" class="avatar" alt="foto do usuário" />
-        <a href="/logout" class="btn" title="sair">
-          <i class="material-icons">logout</i>
+        <!-- Dropdown Trigger -->
+        <a class='dropdown-trigger' href='#' data-target='dropdown1'>
+          <img th:src="${avatar_url}" class="avatar" alt="foto do usuário" />
         </a>
+
+        <!-- Dropdown Structure -->
+        <ul id='dropdown1' class='dropdown-content'>
+          <li><span th:text="${username}"></span></li>
+          <li class="divider" tabindex="-1"></li>
+          <li>
+            <a href="/logout">
+              <i class="material-icons">logout</i>
+              sair
+            </a>
+          </li>
+        </ul>
       </li>
     </ul>
   </div>
@@ -35,22 +46,22 @@
   <div class="card-panel teal accent-3" th:if="${success}" th:text="${success}"></div>
   <div class="card-panel red accent-3 white-text" th:if="${error}" th:text="${error}"></div>
 
-  <h2>Avaliações Pendentes</h2>
+  <h2>Tarefas Pendentes</h2>
 
   <div class="row">
 
-    <div th:each="stars : ${stars}" class="col s12 m6 l4">
+    <div th:each="star : ${stars}" class="col s12 m6 l4">
       <div class="card">
         <div class="card-content">
           <div class="progress">
-            <div class="determinate" th:style="${'width:' + stars.status + '%' }"></div>
+            <div class="determinate" th:style="${'width:' + star.status + '%' }"></div>
           </div>
-          <span th:text="${stars.title}" class="card-title"></span>
-          <p th:text="${stars.description}"></p>
-          <span th:text="${stars.score}" data-badge-caption="points" class="badge blue white-text"></span>
+          <span th:text="${star.title}" class="card-title"></span>
+          <p th:text="${star.description}"></p>
+          <span th:text="${star.score}" data-badge-caption="points" class="badge red white-text"></span>
         </div>
         <div class="card-action">
-          <a th:href="${'/stars/delete/' + stars.id}" class="waves-effect waves-light btn blue">
+          <a th:href="${'/star/delete/' + task.id}" class="waves-effect waves-light btn red">
             <i class="material-icons">delete</i>
           </a>
 
@@ -63,13 +74,23 @@
 
 </div>
 
-
 <div class="fixed-action-btn">
-  <a href="/stars/new" class="btn-floating btn-large blue">
+  <a href="/star/new" class="btn-floating btn-large red">
     <i class="large material-icons">add</i>
   </a>
 </div>
 
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.dropdown-trigger');
+        const options = {
+            constrainWidth: false,
+            coverTrigger: false
+        }
+        var instances = M.Dropdown.init(elems, options);
+    });
+</script>
 
 </html>
