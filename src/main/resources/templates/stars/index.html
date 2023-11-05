@@ -1,58 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <title>Stars</title>
-</head>
+<head th:replace="~{ _template :: head('estrelas') }" ></head>
 
 <body>
 
-<nav>
-  <div class="nav-wrapper">
-    <a href="#" class="brand-logo">Stars</a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li class="active"><a href="/task" th:text="#{stars.pending}"></a></li>
-      <li><a href="/stars/done" th:text="#{task.done}">concluídas</a></li> <!-- Link para tarefas concluídas -->
-      <li><a href="/users" th:text="#{users}">usuários</a></li> <!-- Link para usuários -->
-      <li>
-        <!-- Dropdown Trigger -->
-        <a class='dropdown-trigger' href='#' data-target='dropdown1'>
-          <img th:src="${avatar_url}" class="avatar" alt="foto do usuário" />
-        </a>
-
-        <!-- Dropdown Structure -->
-        <ul id='dropdown1' class='dropdown-content'>
-          <li><span th:text="${username}"></span></li>
-          <li class="divider" tabindex="-1"></li>
-          <li>
-            <a href="/logout">
-              <i class="material-icons">logout</i>
-              sair
-            </a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-</nav>
+<nav th:replace="~{ _template :: #navbar }"></nav>
 
 <div class="container">
 
   <div class="card-panel teal accent-3" th:if="${success}" th:text="${success}"></div>
   <div class="card-panel red accent-3 white-text" th:if="${error}" th:text="${error}"></div>
 
-  <h2>Tarefas Pendentes</h2>
+  <h2>Feedbacks Pendentes</h2>
 
   <div class="row">
 
     <div th:each="star : ${stars}" class="col s12 m6 l4">
       <div class="card">
         <div class="card-content">
+          <img th:if="${star.user != null}" th:src="${star.user.avatarUrl}" alt="" class="avatar">
           <div class="progress">
             <div class="determinate" th:style="${'width:' + star.status + '%' }"></div>
           </div>
@@ -61,8 +28,17 @@
           <span th:text="${star.score}" data-badge-caption="points" class="badge red white-text"></span>
         </div>
         <div class="card-action">
-          <a th:href="${'/star/delete/' + task.id}" class="waves-effect waves-light btn red">
+          <a th:href="${'/star/delete/' + task.id}" class="waves-effect waves-light btn-small red">
             <i class="material-icons">delete</i>
+          </a>
+          <a th:href="${'/star/dec/' + task.id}" class="waves-effect waves-light btn-small" title="diminuir status">
+            <i class="material-icons">remove</i>
+          </a>
+          <a th:if="${star.status != 100}" th:href="${'/star/inc/' + star.id}" class="waves-effect waves-light btn-small" title="aumentar status">
+            <i class="material-icons">add</i>
+          </a>
+          <a th:href="${'/star/catch/' + star.id}" class="waves-effect waves-light btn-small purple" title="pegar tarefa">
+            <i class="material-icons">pan_tool</i>
           </a>
 
         </div>
@@ -74,8 +50,9 @@
 
 </div>
 
+
 <div class="fixed-action-btn">
-  <a href="/star/new" class="btn-floating btn-large red">
+  <a href="/task/new" class="btn-floating btn-large red">
     <i class="large material-icons">add</i>
   </a>
 </div>

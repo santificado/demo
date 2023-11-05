@@ -1,34 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <title>Stars</title>
-</head>
+<head th:replace="~{ _template :: head('cadastrar') }" ></head>
 
 <body>
 
-<nav>
-    <div class="nav-wrapper">
-        <a href="#" class="brand-logo">Stars</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li class="active"><a href="/task">pendentes</a></li>
-            <li><a href="#">concluídas</a></li>
-            <li><a href="#">usuários</a></li>
-        </ul>
-    </div>
-</nav>
+<nav th:replace="~{ _template :: #navbar }"></nav>
 
 <div class="container">
 
-    <h3>Cadastrar Filme</h3>
+    <h3>Cadastrar Feedback</h3>
 
     <div class="row">
-        <form action="/stars" method="post" class="col s12" th:object="${stars}">
+        <form th:action="${'/task'}" method="post" class="col s12" th:object="${task}">
             <div class="row">
                 <div class="input-field col s12">
                     <input
@@ -54,18 +38,25 @@
             <div class="row">
                 <div class="col s12">
                     <p class="range-field">
-                        <label for="stars">Estrelas</label>
+                        <label for="score">Pontos</label>
                         <input th:field="*{score}" type="range" min="1" max="100" />
                         <span class="helper-text red-text" th:errors="*{score}"></span>
                     </p>
                 </div>
             </div>
             <div>
-                <a href="/stars" class="btn grey">cancelar</a>
+                <a href="/task" class="btn grey">cancelar</a>
                 <button class="btn">salvar</button>
             </div>
         </form>
     </div>
-    </div>
+
+
+</div>
+
+
+
+
 </body>
+
 </html>
